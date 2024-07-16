@@ -37,32 +37,24 @@ $(window).resize(function() {
 	};
 })(jQuery);
 
-function timeElapse(date) {  
-    // 确保date是Date对象  
-    if (!(date instanceof Date)) {  
-        date = new Date(date);  
-    }  
-  
-    var current = new Date();  
-    var diff = current - date;  
-    var seconds = Math.floor(diff / 1000);  
-    var days = Math.floor(seconds / (3600 * 24));  
-    seconds -= days * 3600 * 24;  
-    var hours = Math.floor(seconds / 3600);  
-    seconds -= hours * 3600;  
-    var minutes = Math.floor(seconds / 60);  
-    seconds -= minutes * 60;  
-  
-    // 格式化时间单位  
-    hours = hours < 10 ? "0" + hours : hours;  
-    minutes = minutes < 10 ? "0" + minutes : minutes;  
-    seconds = seconds < 10 ? "0" + seconds : seconds;  
-  
-    // 构建结果字符串  
-    var result = "第 <span class=\"digit\">" + days + "</span> 天 <span class=\"digit\">" + hours + "</span> 小时 <span class=\"digit\">" + minutes + "</span> 分钟 <span class=\"digit\">" + seconds + "</span> 秒";  
-  
-    // 如果页面中有id为clock的元素，则更新其内容  
-    if (document.getElementById('clock')) {  
-        document.getElementById('clock').innerHTML = result;  
-    }  
+function timeElapse(date){
+	var current = Date();
+	var seconds = (Date.parse(current) - Date.parse(date)) / 1000;
+	var days = Math.floor(seconds / (3600 * 24));
+	seconds = seconds % (3600 * 24);
+	var hours = Math.floor(seconds / 3600);
+	if (hours < 10) {
+		hours = "0" + hours;
+	}
+	seconds = seconds % 3600;
+	var minutes = Math.floor(seconds / 60);
+	if (minutes < 10) {
+		minutes = "0" + minutes;
+	}
+	seconds = seconds % 60;
+	if (seconds < 10) {
+		seconds = "0" + seconds;
+	}
+	var result = "第 <span class=\"digit\">" + days + "</span> 天 <span class=\"digit\">" + hours + "</span> 小时 <span class=\"digit\">" + minutes + "</span> 分钟 <span class=\"digit\">" + seconds + "</span> 秒"; 
+	$("#clock").html(result);
 }
